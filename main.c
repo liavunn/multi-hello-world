@@ -2,7 +2,8 @@
  
 #include "data.h"
 
-int main(void){
+int main(void) {
+  //Stores the country code entered by the user.
   char  user_country_code[6] ={0};
  
   //Display the input prompt and the list of supported country codes.
