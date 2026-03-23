@@ -12,7 +12,7 @@
 - `data.c` :Data source.
 - `data.h` :Header definition.
 
-## Haw to Run
+## How to Run
 Compile and run the program using the following commands:
 ```bash
 clang main.c data.c -o hello
@@ -21,3 +21,11 @@ clang main.c data.c -o hello
 
 ## License
 `GPL-3.0` License
+
+### About
+>**My First C Project**
+>This is my first C programming project, completed at age 14.
+>Follows **Google C Style Guide**.
+>Core features implemented.
+>
+>*Completed on March 23, 2026*
