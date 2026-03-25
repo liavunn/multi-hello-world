@@ -28,6 +28,7 @@ int main(void) {
   }
   else {
     printf("country code error / Not within program scope\n");
+    printf("Use default language:Hello World");
   }
 
 return 0;
