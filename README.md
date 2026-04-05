@@ -38,4 +38,5 @@ clang main.c data.c -o Hello-World
 >    - `de_DE` (German), `pt_BR` (Portuguese).
 >
 >    Default languages: `en_US` (English).
+>
 >*Completed on March 23, 2026*
