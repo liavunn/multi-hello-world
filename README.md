@@ -27,6 +27,15 @@ clang main.c data.c -o Hello-World
 >**My First C Project**
 >This is my first C programming project, completed at age 14.
 >Follows **Google C Style Guide**.
->Core features implemented.
 >
+>- **v1.0.0**
+>  - Core features implemented.
+>  - Currently supported languages:
+>    - `zh_CN`,  `zh_TW` (Chinese),
+>    - `en_US`, `en_GB` (English),
+>    - `es_ES` (Spanish), `fr_FR` (french),
+>    - `ja_JP` (Japanese) ,`ru_RU` (Russian),
+>    - `de_DE` (German), `pt_BR` (Portuguese).
+>
+>    Default languages: `en_US` (English).
 >*Completed on March 23, 2026*
