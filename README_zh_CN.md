@@ -1,3 +1,5 @@
+![Static Badge](https://img.shields.io/github/v/release/liavunn/multi-hello-world?color=E0FFFF)
+
 [English](README.md) | 简体中文
 
 # 多语言你好世界
@@ -42,7 +44,12 @@ clang main.c data.c -o Hello-world
 >
 >    默认语言: `en_US` (英语)。
 >
->*完成于2026年3月23日*
+> *完成于2026年3月23日*
 
  ---
 
+> **v1.1.0**
+>  - 加入大小写不敏感。
+>  - 添加自动获取系统语言作为备用。
+>
+> *完成与2026年4月6日*

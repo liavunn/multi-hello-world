@@ -1,3 +1,5 @@
+![Static Badge](https://img.shields.io/github/v/release/liavunn/multi-hello-world?color=E0FFFF)
+
 [简体中文](README_zh_CN.md) | English
 # Multi Hello World
 
@@ -38,10 +40,15 @@ clang main.c data.c -o Hello-World
 >    - `es_ES` (Spanish), `fr_FR` (french),
 >    - `ja_JP` (Japanese) ,`ru_RU` (Russian),
 >    - `de_DE` (German), `pt_BR` (Portuguese).
->
+> 
 >    Default languages: `en_US` (English).
+> 
+> *Completed on March 23, 2026*
+ 
+---
+ 
+> **v1.1.0**
+>  - Added case-insensitive input support.
+>  - Automatic system locale detection.
 >
->*Completed on March 23, 2026*
-
- ---
-
+> *Completed on April 6, 2026*
