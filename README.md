@@ -52,3 +52,12 @@ clang main.c data.c -o Hello-World
 >  - Automatic system locale detection.
 >
 > *Completed on April 6, 2026*
+
+---
+
+> **v1.2.0**
+>  - Moved logic listing, input, and validation logic into `data.h/c`. 
+>  - Added `utils.h/c` for better modularity.
+>
+> *Completed on April 19, 2026*
+

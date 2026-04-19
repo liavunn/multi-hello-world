@@ -20,37 +20,38 @@
 #ifndef DATA_H_
 #define DATA_H_
 
-//Holds country code and its greeting message.
+extern const char* kDefaultCountryCode;
+
+// Holds country code and its greeting message.
 typedef struct {
 const char* display_country_code;
 const char* country_code;
 const char* country_greeting;
 } Greeting;
 
-//Lookup table for greeting messages.
+// Lookup table for greeting messages.
 extern const Greeting kGreetings[];
-//Number of entries in the kGreetings table.
+// Number of entries in the kGreetings table.
 extern const size_t kNumGreetings;
 
-//Lookup the country code and return the greeting message.
-//Returns NULL if no match is found.
+// Lookup the country code and return the greeting message.
+// Returns NULL if no match is found.
 const char* get_greeting(const char* country_code);
 
-//Retrieve the current system language setting.
-//If retrieval fails, defaults to "en_us".
-//
-//Arguments:
-//  buffer: Character array for storing country codes. 
-//  buffer_size: Buffer size, recommended to be 6 (e.g., "en_us").
-void get_system_country_code(char* buffer, size_t buffer_size);
-
-//Convert uppercase to lowercase.
+// Prompts the user for input, retrieves it, and converts the result to lowercase.
 // 
-// Arguments:
-//   str: Pointer to the string to be converted.
-//
-// Returns:
-//    Returns 0 on success, or -1 if the input pointer is NULL.  
-int to_lowercase(char* str);
+//   buffer: A pointer to the memory (from main) where the input will be stored.
+//   buffer_size: The maximum capacity of the buffer to ensure safety.
+// 
+//   Returns 0 on succerss, or -1 if the input fails or an error occurs.
+int get_user_input(char* buffer, size_t read_limit, size_t total_size);
 
-#endif
+
+// Display the final greeting message based on the country code in the buffer.
+// If the lookup fails, it falls back to the system locale or default code.
+// 
+//   buffer: The buffer containing the user-provided country code.
+//   buffer_size: The total size of the allocated buffer.
+int display_final_greeting(char* buffer, size_t buffer_size, char* locale); 
+
+#endif // DATA_H

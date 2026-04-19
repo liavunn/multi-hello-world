@@ -19,18 +19,20 @@
 
 #include <string.h>
 #include <stdio.h>
-#include <locale.h>
 #include <ctype.h>
 
 #include "data.h"
+#include "utils.h"
 
-//Stores country code and its greeting messege.
+const char* kDefaultCountryCode = "en_us";
+
+// Stores country code and its greeting message.
 const Greeting kGreetings[]= {
   {"zh_CN", "zh_cn", "你好，世界"},
   {"zh_TW", "zh_tw", "你好，世界"},
   {"en_US", "en_us", "Hello World"},
   {"en_GB", "en_gb", "Hello World"},
-  {"es_ES", "es_es", "Hola mundo"},
+  {"es_ES", "es_es", "Hola Mundo"},
   {"fr_FR", "fr_fr", "Bonjour, le Monde"},
   {"ja_JP", "ja_jp", "こんにちは,世界"},
   {"ru_RU", "ru_ru", "Привет, мир"},
@@ -38,44 +40,57 @@ const Greeting kGreetings[]= {
   {"pt_BR", "pt_br", "Olá Mundo"}
 };
 
-//Computes the number of entries in kGreetings.
 const size_t kNumGreetings = sizeof(kGreetings)/sizeof(kGreetings[0]);
 
-//Lookup the country code and return the greeting message.
 const char* get_greeting(const char* country_code) {
   for (size_t i = 0; i < kNumGreetings; ++i) {
     if (strncmp(country_code, kGreetings[i].country_code, 6) == 0) {
       return kGreetings[i].country_greeting;
     }
   }
-  //Return NULL if no match is found. 
+
   return NULL;
 }
 
-//Convert uppercase to lowercase.
-int to_lowercase(char* str) {
-  if (str == NULL) {
-    return -1;
+// Prompts the user for input, retrieves it, and converts the result to lowercase.
+int get_user_input(char* buffer, size_t read_limit, size_t total_size) {
+  printf("Please enter a country code:");
+  for (size_t i = 0; i < kNumGreetings; ++i) {
+    printf("%s", kGreetings[i].display_country_code);
+    if (i < kNumGreetings - 1) {
+      printf(", ");
+    }
   }
-  for (size_t i = 0; str[i] != '\0'; ++i) {
-    str[i] = (char)tolower((unsigned char)str[i]);
+  printf("\n");
+
+  get_fetch_input(buffer, read_limit);
+
+  if (to_lowercase(buffer) == -1) {
+    snprintf(buffer, total_size, "%s", kDefaultCountryCode);
   }
+
   return 0;
 }
 
-//Implements system country code retrieval via the standard C locale library.
-void get_system_country_code(char* buffer, size_t buffer_size) {
-  //Retrieves the current system language setting.
-  char* system_locale = setlocale(LC_CTYPE, "");
+// Display the final greeting message based on the country code in the buffer.
+int display_final_greeting(char* buffer, size_t buffer_size, char* locale) {
+  const char* result_greeting = get_greeting(buffer);
 
-  //Falls back to to match the system language as a fallback; use "en_us" if detection fails.
-  if (system_locale != NULL) {
-    snprintf(buffer, buffer_size, "%s", system_locale);
+  if (result_greeting != NULL) {
+    printf("%s\n", result_greeting);
+    return 0;
+  }
 
-    to_lowercase(buffer);
+  printf("Country code error / Not within program scope\n");
+  result_greeting = get_greeting(locale);
+  if (result_greeting != NULL) {
+    printf("Attempting to use system language: %s\n", result_greeting);
+    return 0;
+    } 
+
+  result_greeting = get_greeting(kDefaultCountryCode); 
+  printf("Not within program scope\n");
+  printf("Use default language:%s\n", result_greeting);
+  return 0;
   }
-  else {
-    //Falls back to "en_us" if the system locale cannot be detected.
-    snprintf(buffer, buffer_size, "en_us");
-  }
-}
+
