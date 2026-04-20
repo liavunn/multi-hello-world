@@ -46,7 +46,6 @@ const char* get_greeting(const char* country_code);
 //   Returns 0 on succerss, or -1 if the input fails or an error occurs.
 int get_user_input(char* buffer, size_t read_limit, size_t total_size);
 
-
 // Display the final greeting message based on the country code in the buffer.
 // If the lookup fails, it falls back to the system locale or default code.
 // 
