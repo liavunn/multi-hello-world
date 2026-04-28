@@ -19,7 +19,7 @@
 ## 如何运行
 使用以下命令编译并运行程序：
 ```bash
-clang main.c data.c -o Hello-world
+make
 ./Hello-World
 ```
 
@@ -61,4 +61,14 @@ clang main.c data.c -o Hello-world
 >  - 增加`utils.h/c`提升模块化程度。
 >
 > *完成与2026年4月19日*
+
+---
+
+> **v2.0.0**
+>  - 为保持一致性，所有命名均迁移至 PascalCase。
+>  - 实现了基于哈希的 INI 解析器，并支持多节结构。
+>  - 添加了 Makefile，以简化编译。
+>  - 增强了配置恢复和内存安全方面的错误处理。 
+>
+> *完成与2026年4月28日*
 

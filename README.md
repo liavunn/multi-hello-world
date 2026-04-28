@@ -18,7 +18,7 @@
 ## How to Run
 Compile and run the program using the following commands:
 ```bash
-clang main.c data.c -o Hello-World
+make
 ./Hello-World
 ```
 
@@ -60,4 +60,14 @@ clang main.c data.c -o Hello-World
 >  - Added `utils.h/c` for better modularity.
 >
 > *Completed on April 19, 2026*
+
+---
+
+> **v2.0.0**
+>  - Migrated all naming to PascalCase for consistency.
+>  - Implemented Hash-based INI parser with multi-section support.
+>  - Added Makefile for streamlined compilation.
+>  - Enhanced error handling for configuration recovery and memory safety. 
+>
+> *Completed on April 28, 2026*
 
