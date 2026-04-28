@@ -18,19 +18,74 @@
 
 
 #include <stdio.h>
+#include <string.h>
  
 #include "data.h"
 #include "utils.h"
+#include "hash.h"
+#include "config.h"
 
 int main(void) {
   char user_country_code[10] ={0};
   char locale[10] = {0};
+  int file_error = 0;
 
-  get_system_country_code(locale, 6);
+  printf("\nLoading configuration...");
+  int results = LoadConfig("Config.ini");
 
-  get_user_input(user_country_code, 7, 10);
+  // Check if the configuration was loaded successfully.
+  if (results != -1 && results != -2) {
+
+    char* search_ptr = HashSearch("user", "language", user_country_code, sizeof(user_country_code));
+
+    if (search_ptr == NULL) {
+    printf("\nUser language configuration corrupted or missing.");
+    file_error = -1;
+    }
   
-  display_final_greeting(user_country_code, 10, locale);
+    if (file_error == 0) {
+    printf("  Done.\n");
+    
+    DisplayFinalGreeting(user_country_code);
+    } else if (file_error == -1) {
+    printf("  Error.\n");
+
+    remove("Config.ini");
+    CreateFile("Config.ini");
+    LoadConfig("Config.ini");
+
+    printf("File reset.\n");
+
+    GetUserInput(user_country_code, 7, 10);
+  
+    DisplayFinalGreeting(user_country_code);
+
+    }
+  // Handle invalid filename arguments by using default values. 
+  } else if (results == -1) {
+    printf("\nUnable to read configuration file. Applying default values instead...\n");
+
+    GetUserInput(user_country_code, 7, 10);
+  
+    DisplayFinalGreeting(user_country_code);
+  // File not found: create a new configuration and prompt for input. 
+  } else if (results == -2) {
+    CreateFile("Config.ini");
+
+    printf("\nConfiguration file not found. Created a new one.\n");
+
+    GetUserInput(user_country_code, 7, 10);
+  
+    DisplayFinalGreeting(user_country_code);
+  }
+
+  // Save the final settings and clean up resources.
+  GetSystemCountryCode(locale, 6);
+  HashInsert("system", "language", locale, strlen(locale));
+
+  SaveConfig("Config.ini");
+
+  HashFree();
 
   return 0;
 }

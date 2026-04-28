@@ -23,11 +23,13 @@
 
 #include "data.h"
 #include "utils.h"
+#include "hash.h"
+#include "config.h"
 
 const char* kDefaultCountryCode = "en_us";
 
 // Stores country code and its greeting message.
-const Greeting kGreetings[]= {
+const struct Greeting kGreetings[]= {
   {"zh_CN", "zh_cn", "你好，世界"},
   {"zh_TW", "zh_tw", "你好，世界"},
   {"en_US", "en_us", "Hello World"},
@@ -37,12 +39,12 @@ const Greeting kGreetings[]= {
   {"ja_JP", "ja_jp", "こんにちは,世界"},
   {"ru_RU", "ru_ru", "Привет, мир"},
   {"de_DE", "de_de", "Hallo Welt"},
-  {"pt_BR", "pt_br", "Olá Mundo"}
+  {"pt_BR", "pt_br", "Olá Mundo"},
 };
 
 const size_t kNumGreetings = sizeof(kGreetings)/sizeof(kGreetings[0]);
 
-const char* get_greeting(const char* country_code) {
+const char* GetGreeting(const char* country_code) {
   for (size_t i = 0; i < kNumGreetings; ++i) {
     if (strncmp(country_code, kGreetings[i].country_code, 6) == 0) {
       return kGreetings[i].country_greeting;
@@ -53,7 +55,7 @@ const char* get_greeting(const char* country_code) {
 }
 
 // Prompts the user for input, retrieves it, and converts the result to lowercase.
-int get_user_input(char* buffer, size_t read_limit, size_t total_size) {
+int GetUserInput(char* buffer, size_t read_limit, size_t total_size) {
   printf("Please enter a country code:");
   for (size_t i = 0; i < kNumGreetings; ++i) {
     printf("%s", kGreetings[i].display_country_code);
@@ -63,9 +65,9 @@ int get_user_input(char* buffer, size_t read_limit, size_t total_size) {
   }
   printf("\n");
 
-  get_fetch_input(buffer, read_limit);
+  FetchUserInput(buffer, read_limit);
 
-  if (to_lowercase(buffer) == -1) {
+  if (ToLowercase(buffer) == -1) {
     snprintf(buffer, total_size, "%s", kDefaultCountryCode);
   }
 
@@ -73,23 +75,26 @@ int get_user_input(char* buffer, size_t read_limit, size_t total_size) {
 }
 
 // Display the final greeting message based on the country code in the buffer.
-int display_final_greeting(char* buffer, size_t buffer_size, char* locale) {
-  const char* result_greeting = get_greeting(buffer);
+int DisplayFinalGreeting(char* buffer) {
+  const char* result_greeting = GetGreeting(buffer);
 
   if (result_greeting != NULL) {
     printf("%s\n", result_greeting);
+    HashInsert("user", "language", buffer, strlen(buffer));
     return 0;
   }
 
-  printf("Country code error / Not within program scope\n");
-  result_greeting = get_greeting(locale);
+  printf("Country code error or Not within program scope\n");
+  char locale[256] = {0};
+  HashSearch("system", "language", locale, sizeof(locale));
+  result_greeting = GetGreeting(locale);
   if (result_greeting != NULL) {
     printf("Attempting to use system language: %s\n", result_greeting);
     return 0;
     } 
 
-  result_greeting = get_greeting(kDefaultCountryCode); 
-  printf("Not within program scope\n");
+  result_greeting = GetGreeting(kDefaultCountryCode); 
+  printf("Unable to use system language.\n");
   printf("Use default language:%s\n", result_greeting);
   return 0;
   }

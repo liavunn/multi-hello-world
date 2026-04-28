@@ -16,17 +16,39 @@
 *along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#ifndef UTILS_H
-#define UTILS_H
+
+#ifndef UTILS_H_
+#define UTILS_H_
+
 
 // === string ===
+
 
 // Convert uppercase to lowercase.
 // 
 //   str: Pointer to the string to be converted.
 //
 //   Returns 0 on success, or -1 if the input pointer is NULL.  
-int to_lowercase(char* str);
+int ToLowercase(char* str);
+
+// Removes all whitespace characters from the string.
+//
+//   str: Pointer to the string to be converted.
+//
+//   Returns 0 on success, or -1 if the input pointer is NULL.  
+int RemoveAllWhitespace(char* str);
+
+// Merges two strings into one, inserting a '|' separator in between.
+//
+//   dest: Buffer to store the result.
+//   dest_size: Capacity of the destination buffer.
+//   front: The first string part.
+//   back: The second string part.
+//
+//   Returns 0 on success.
+//   Returns -1 if any pointer is NULL or dest_size is 0.
+//   Returns -2 if the destination buffer is too small.
+int CombineParts(char* dest, size_t dest_size, const char* front, const char* back);
 
 // Fetches an input string from the user.
 // 
@@ -34,15 +56,28 @@ int to_lowercase(char* str);
 //   buffer_size: Maximum characters to read.
 //   
 //   Returns 0 on success, or -1 if an error occurred. 
-int get_fetch_input(char* buffer, size_t buffer_size);
+int FetchUserInput(char* buffer, size_t buffer_size);
+
 
 // === system ===
+
 
 // Retrieve the current system language setting.
 // If retrieval fails, defaults to "en_us".
 //
 //   buffer: Character array for storing country codes. 
 //   buffer_size: Buffer size, recommended to be 6 (e.g., "en_us").
-void get_system_country_code(char* buffer, size_t buffer_size);
+void GetSystemCountryCode(char* buffer, size_t buffer_size);
 
-#endif // UTILS_H
+
+// === file ===
+
+
+// Creates a file with the name specified by the argument.
+//
+//   filename: The filename to be created.
+//
+//   Returns: 0 on success, -1 on failure.
+int CreateFile(const char* filename);
+
+#endif // UTILS_H_
