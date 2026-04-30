@@ -71,3 +71,11 @@ make
 >
 > *Completed on April 28, 2026*
 
+---
+
+> **v2.0.0**
+>  - Add symbol compatibility
+>  - Minor tweaks
+>
+> *Completed on April 30, 2026*
+
