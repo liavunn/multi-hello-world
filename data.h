@@ -44,13 +44,13 @@ const char* GetGreeting(const char* country_code);
 //   buffer_size: The maximum capacity of the buffer to ensure safety.
 // 
 //   Returns 0 on succerss, or -1 if the input fails or an error occurs.
-int GetUserInput(char* buffer, size_t read_limit, size_t total_size);
+int GetUserInputCountryCode(char* buffer, size_t read_limit, size_t total_size);
 
 // Display the final greeting message based on the country code in the buffer.
 // If the lookup fails, it falls back to the system locale or default code.
 // 
 //   buffer: The buffer containing the user-provided country code.
 //   buffer_size: The total size of the allocated buffer.
-int DisplayFinalGreeting(char* buffer); 
+int DisplayFinalGreeting(char* buffer, int* status); 
 
 #endif // DATA_H

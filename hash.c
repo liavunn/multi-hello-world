@@ -116,7 +116,7 @@ char* HashSearch(const char* section, const char* key, char* search_results, siz
       if (hash == current->hash && composite_key_str_len == current->composite_key_str_len && 
           memcmp(current->composite_key, composite_key, composite_key_str_len) == 0 &&
 	  current->value_len < search_result_len) {
-        snprintf(search_results, current->value_len + 1, "%s", current->value);
+        snprintf(search_results, search_result_len, "%s", current->value);
 	return search_results;
       }
 

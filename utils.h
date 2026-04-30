@@ -21,6 +21,17 @@
 #define UTILS_H_
 
 
+// === input ===
+
+
+// Clears the standard input buffer
+//
+//   No parameters.
+//
+//   Returns the last character read from the buffer as an int
+int ClearStdin(void);
+
+
 // === string ===
 
 
@@ -30,6 +41,13 @@
 //
 //   Returns 0 on success, or -1 if the input pointer is NULL.  
 int ToLowercase(char* str);
+
+// Converts all underscores in a string to hyphens.
+//
+//   str: Pointer to the string to be converted.
+//
+//   Returns 0 on success, or -1 if the input pointer is NULL.  
+int ToHyphen(char* str);
 
 // Removes all whitespace characters from the string.
 //
@@ -59,15 +77,27 @@ int CombineParts(char* dest, size_t dest_size, const char* front, const char* ba
 int FetchUserInput(char* buffer, size_t buffer_size);
 
 
+// === input ===
+
+
+// Clears the standard input buffer
+//
+//   No parameters.
+//
+//   Returns the last character read from the buffer as an int
+int ClearStdin(void);
+
+
 // === system ===
 
 
 // Retrieve the current system language setting.
-// If retrieval fails, defaults to "en_us".
+// If retrieval fails, defaults to input.
 //
 //   buffer: Character array for storing country codes. 
-//   buffer_size: Buffer size, recommended to be 6 (e.g., "en_us").
-void GetSystemCountryCode(char* buffer, size_t buffer_size);
+//   buffer_size: Buffer size, recommended to be 6.
+//   default_language: The fallback country code if system retrieval fails.
+void GetSystemCountryCode(char* buffer, size_t buffer_size, const char* default_language);
 
 
 // === file ===

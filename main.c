@@ -27,60 +27,69 @@
 
 int main(void) {
   char user_country_code[10] ={0};
+  int displayfinalgreeting_result = 0;
+
   char locale[10] = {0};
-  int file_error = 0;
+  GetSystemCountryCode(locale, 6, kDefaultCountryCode);
+  HashInsert("system", "language", locale, strlen(locale));
 
   printf("\nLoading configuration...");
-  int results = LoadConfig("Config.ini");
+  int loadconfig_result = LoadConfig("Config.ini");
 
   // Check if the configuration was loaded successfully.
-  if (results != -1 && results != -2) {
+  if (loadconfig_result != -1 && loadconfig_result != -2) {
+    int file_status = 0;
 
     char* search_ptr = HashSearch("user", "language", user_country_code, sizeof(user_country_code));
 
     if (search_ptr == NULL) {
     printf("\nUser language configuration corrupted or missing.");
-    file_error = -1;
+    file_status = -1;
     }
   
-    if (file_error == 0) {
-    printf("  Done.\n");
-    
-    DisplayFinalGreeting(user_country_code);
-    } else if (file_error == -1) {
-    printf("  Error.\n");
+    if (file_status == 0) {
+      printf("  Done.\n");
 
-    remove("Config.ini");
-    CreateFile("Config.ini");
-    LoadConfig("Config.ini");
+      DisplayFinalGreeting(user_country_code, &displayfinalgreeting_result);
+    } else if (file_status == -1) {
+      printf("  Error.\n");
 
-    printf("File reset.\n");
+      remove("Config.ini");
+      CreateFile("Config.ini");
+      HashFree();
 
-    GetUserInput(user_country_code, 7, 10);
-  
-    DisplayFinalGreeting(user_country_code);
+      printf("File reset.\n");
 
+      GetUserInputCountryCode(user_country_code, 7, sizeof(user_country_code));
+
+      DisplayFinalGreeting(user_country_code, &displayfinalgreeting_result);
+      if (displayfinalgreeting_result == 0) {
+        HashInsert("user", "language", user_country_code, strlen(user_country_code));
+      }
     }
   // Handle invalid filename arguments by using default values. 
-  } else if (results == -1) {
+  } else if (loadconfig_result == -1) {
     printf("\nUnable to read configuration file. Applying default values instead...\n");
 
-    GetUserInput(user_country_code, 7, 10);
+    GetUserInputCountryCode(user_country_code, 7, sizeof(user_country_code));
   
-    DisplayFinalGreeting(user_country_code);
+    DisplayFinalGreeting(user_country_code, &displayfinalgreeting_result);
   // File not found: create a new configuration and prompt for input. 
-  } else if (results == -2) {
+  } else if (loadconfig_result == -2) {
     CreateFile("Config.ini");
 
     printf("\nConfiguration file not found. Created a new one.\n");
 
-    GetUserInput(user_country_code, 7, 10);
+    GetUserInputCountryCode(user_country_code, 7, sizeof(user_country_code));
   
-    DisplayFinalGreeting(user_country_code);
+    DisplayFinalGreeting(user_country_code, &displayfinalgreeting_result);
+    if (displayfinalgreeting_result == 0) {
+      HashInsert("user", "language", user_country_code, strlen(user_country_code));
+    }
   }
 
   // Save the final settings and clean up resources.
-  GetSystemCountryCode(locale, 6);
+  GetSystemCountryCode(locale, 6, kDefaultCountryCode);
   HashInsert("system", "language", locale, strlen(locale));
 
   SaveConfig("Config.ini");

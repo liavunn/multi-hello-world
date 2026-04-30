@@ -62,7 +62,9 @@ int HashDelete(const char* section, const char* key);
 
 // Frees all memory allocated for the hash table.
 //
-// Cleans up both the nodes and the duplicated key strings.
+//   No parameters.
+//
+//   No return value.
 void HashFree();
 
 #endif // HASH_H_

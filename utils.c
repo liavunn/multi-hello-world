@@ -15,6 +15,17 @@
 #include "utils.h"
 
 
+// === input ===
+
+
+// Clears the standard input buffer
+int ClearStdin(void) {
+  int c = 0;
+  while ((c = getchar()) != '\n' && c != EOF) {}
+  return c;
+}
+
+
 // === string ===
 
 
@@ -26,6 +37,23 @@ int ToLowercase(char* str) {
 
   for (size_t i = 0; str[i] != '\0'; ++i) {
     str[i] = (char)tolower((unsigned char)str[i]);
+  }
+  return 0;
+}
+
+// Converts all underscores in a string to hyphens.
+int ToHyphen(char* str) {
+  if (str == NULL) {
+    return -1;
+  }
+
+  char* underscore_position = str;
+  while (underscore_position != NULL) {
+    underscore_position = strchr(underscore_position, '_');
+    if (underscore_position != NULL) {
+      *underscore_position = '-';
+      ++underscore_position;
+    }
   }
   return 0;
 }
@@ -64,6 +92,9 @@ int CombineParts(char* dest, size_t dest_size, const char* front, const char* ba
 
 // Fetches an input string from the user.
 int FetchUserInput(char* buffer, size_t buffer_size) {
+  if (buffer == NULL) {
+    return -1;
+  }
   if (fgets(buffer, (int)buffer_size, stdin) == NULL) {
     return -1;
   }
@@ -73,6 +104,8 @@ int FetchUserInput(char* buffer, size_t buffer_size) {
     buffer[--str_len] = '\0';
   }
 
+  ClearStdin();
+
   return 0;
 }
 
@@ -81,14 +114,16 @@ int FetchUserInput(char* buffer, size_t buffer_size) {
 
 
 // Implements system country code retrieval via the standard C locale library.
-void GetSystemCountryCode(char* buffer, size_t buffer_size) {
+void GetSystemCountryCode(char* buffer, size_t buffer_size, const char* default_language) {
   char* system_locale = setlocale(LC_CTYPE, "");
 
   if (system_locale != NULL) {
     snprintf(buffer, buffer_size, "%s", system_locale);
     ToLowercase(buffer);
+    ToHyphen(buffer);
+    RemoveAllWhitespace(buffer);
   } else {
-    snprintf(buffer, buffer_size, "en_us");
+    snprintf(buffer, buffer_size, "%s", default_language);
   }
 }
 

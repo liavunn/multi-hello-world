@@ -1,6 +1,6 @@
 CC = clang
 
-CFLAGS = -Wall -Wextra -Werror -Wsign-compare -Wshadow -g
+CFLAGS = -Wall -Wextra -Werror -Wsign-compare -Wshadow -g -static
 
 TARGET = Multi-Hello-World-Linux-x64
 
