@@ -1,3 +1,10 @@
+> [!CAUTION]
+> 项目状态：已归档
+>
+> 本项目已停止维护。
+>
+> 请移步新项目：[**Einntol**](https://github.com/liavunn/einntol)
+
 ![Static Badge](https://img.shields.io/github/v/release/liavunn/multi-hello-world?color=E0FFFF)
 
 [English](README.md) | 简体中文
