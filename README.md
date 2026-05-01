@@ -1,3 +1,10 @@
+> [!CAUTION]
+> Project Status: Archived
+>
+> This project is no longer maintained. 
+>
+> Please check out the successor: [**Einntol**](https://github.com/liavunn/einntol)
+
 ![Static Badge](https://img.shields.io/github/v/release/liavunn/multi-hello-world?color=E0FFFF)
 
 [简体中文](README_zh_CN.md) | English
